@@ -8,9 +8,7 @@ use Illuminate\Notifications\Notification;
 
 class AppointmentConfirmedNotification extends Notification
 {
-    public function __construct(private Appointment $appointment, private bool $rescheduled = false)
-    {
-    }
+    public function __construct(private Appointment $appointment, private bool $rescheduled = false) {}
 
     public function via(object $notifiable): array
     {
@@ -28,6 +26,7 @@ class AppointmentConfirmedNotification extends Notification
             ->line("Serviço: {$a->service->name}")
             ->line('Data: '.$a->startsAt()->format('d/m/Y').' às '.$a->startLabel())
             ->line('Para consultar, remarcar ou cancelar, use o link seguro abaixo (não o compartilhe):')
-            ->action('Gerenciar agendamento', route('appointments.manage', $a->manage_token));
+            ->action('Gerenciar agendamento', route('appointments.manage', $a->manage_token))
+            ->salutation('Atenciosamente, Barbearia');
     }
 }

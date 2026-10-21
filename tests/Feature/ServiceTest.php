@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\BookingException;
 use App\Models\Appointment;
 use App\Models\Service;
 use App\Models\User;
@@ -57,7 +58,7 @@ class ServiceTest extends TestCase
         $this->assertSame(1, Appointment::count());
         $this->get(route('booking.create', $service))->assertNotFound();
         // E no serviço de domínio (defesa em profundidade)
-        $this->expectException(\App\Exceptions\BookingException::class);
+        $this->expectException(BookingException::class);
         $this->book($service, '2026-11-03', '11:00');
     }
 

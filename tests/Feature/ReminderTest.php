@@ -163,7 +163,8 @@ class ReminderTest extends TestCase
     {
         $a = $this->book($this->service(), '2026-11-03', '10:00', ['customer_email' => 'ana@example.com']);
 
-        Mail::extend('falhando', fn () => new class extends AbstractTransport {
+        Mail::extend('falhando', fn () => new class extends AbstractTransport
+        {
             protected function doSend(SentMessage $message): void
             {
                 throw new TransportException('Conexão recusada ao enviar para ana@example.com');
@@ -206,7 +207,8 @@ class ReminderTest extends TestCase
 
     public function test_falha_no_email_de_confirmacao_nao_impede_o_agendamento(): void
     {
-        Mail::extend('falhando2', fn () => new class extends AbstractTransport {
+        Mail::extend('falhando2', fn () => new class extends AbstractTransport
+        {
             protected function doSend(SentMessage $message): void
             {
                 throw new TransportException('SMTP indisponível');

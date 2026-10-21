@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Enums\AppointmentStatus;
+use App\Exceptions\BookingException;
 use App\Models\Appointment;
 use App\Models\Service;
 use App\Models\User;
@@ -143,7 +144,7 @@ class AgendaAndReportTest extends TestCase
         app(BookingService::class)->cancel($a);
         $this->travelTo(CarbonImmutable::parse('2026-11-03 11:00', 'America/Sao_Paulo'));
 
-        $this->expectException(\App\Exceptions\BookingException::class);
+        $this->expectException(BookingException::class);
         app(BookingService::class)->complete($a);
     }
 

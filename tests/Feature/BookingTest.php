@@ -8,6 +8,7 @@ use App\Services\AvailabilityService;
 use App\Services\BookingService;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class BookingTest extends TestCase
@@ -204,14 +205,14 @@ class BookingTest extends TestCase
     private function tryBook($service, string $date, string $time, bool $rollback): bool
     {
         try {
-            \Illuminate\Support\Facades\DB::beginTransaction();
+            DB::beginTransaction();
             $this->book($service, $date, $time, ['customer_email' => 'x@example.com']);
             $ok = true;
         } catch (BookingException) {
             $ok = false;
         } finally {
             if ($rollback) {
-                \Illuminate\Support\Facades\DB::rollBack();
+                DB::rollBack();
             }
         }
 

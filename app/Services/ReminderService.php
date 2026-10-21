@@ -20,9 +20,7 @@ use Throwable;
  */
 class ReminderService
 {
-    public function __construct(private BusinessHours $hours)
-    {
-    }
+    public function __construct(private BusinessHours $hours) {}
 
     /**
      * Recalcula os lembretes de um agendamento (criação ou remarcação).

@@ -32,8 +32,7 @@ class BookingService
         private BusinessHours $hours,
         private AvailabilityService $availability,
         private ReminderService $reminders,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array{customer_name:string,customer_phone:string,customer_email:string}  $customer

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\BookingException;
 use App\Models\Appointment;
 use App\Models\Service;
 use App\Services\BookingService;
@@ -47,7 +48,7 @@ class ConcurrencyTest extends TestCase
                 ], $date, '10:00');
 
                 return 'ok';
-            } catch (\App\Exceptions\BookingException) {
+            } catch (BookingException) {
                 return 'conflito';
             }
         };
@@ -80,7 +81,7 @@ class ConcurrencyTest extends TestCase
                 ], $date, $time);
 
                 return "$time|ok";
-            } catch (\App\Exceptions\BookingException) {
+            } catch (BookingException) {
                 return "$time|conflito";
             } catch (\Throwable $e) {
                 return "$time|ERRO ".class_basename($e).' '.substr($e->getMessage(), 0, 200);
@@ -101,7 +102,7 @@ class ConcurrencyTest extends TestCase
 
         $outcome = [];
         foreach ($results as $r) {
-            [$time, $status] = explode("|", $r, 2) + [1 => ''];
+            [$time, $status] = explode('|', $r, 2) + [1 => ''];
             $outcome[$time] = $status;
         }
         $detail = json_encode($results);

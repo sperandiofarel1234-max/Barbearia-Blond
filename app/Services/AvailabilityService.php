@@ -13,9 +13,7 @@ use Carbon\CarbonImmutable;
  */
 class AvailabilityService
 {
-    public function __construct(private BusinessHours $hours)
-    {
-    }
+    public function __construct(private BusinessHours $hours) {}
 
     /**
      * inicio_existente < fim_novo E fim_existente > inicio_novo

@@ -8,9 +8,7 @@ use Illuminate\Notifications\Notification;
 
 class AppointmentReminderNotification extends Notification
 {
-    public function __construct(private Appointment $appointment, private string $type)
-    {
-    }
+    public function __construct(private Appointment $appointment, private string $type) {}
 
     public function via(object $notifiable): array
     {
@@ -28,6 +26,7 @@ class AppointmentReminderNotification extends Notification
             ->line("Lembrete do seu atendimento ({$a->service->name}):")
             ->line('Data: '.$a->startsAt()->format('d/m/Y').' às '.$a->startLabel())
             ->line('Precisa remarcar ou cancelar? Use o link seguro abaixo.')
-            ->action('Gerenciar agendamento', route('appointments.manage', $a->manage_token));
+            ->action('Gerenciar agendamento', route('appointments.manage', $a->manage_token))
+            ->salutation('Atenciosamente, Barbearia');
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Enums\AppointmentStatus;
 use App\Enums\ReminderStatus;
+use App\Exceptions\BookingException;
 use App\Models\Appointment;
 use App\Services\AvailabilityService;
 use App\Services\BookingService;
@@ -92,7 +93,7 @@ class CancellationTest extends TestCase
     {
         $a = $this->book($this->service(), '2026-11-02', '09:00');
 
-        $this->expectException(\App\Exceptions\BookingException::class);
+        $this->expectException(BookingException::class);
         app(BookingService::class)->cancel($a);
     }
 

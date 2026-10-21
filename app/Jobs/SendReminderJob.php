@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
-class SendReminderJob implements ShouldQueue, ShouldBeUnique
+class SendReminderJob implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
 
@@ -15,9 +15,7 @@ class SendReminderJob implements ShouldQueue, ShouldBeUnique
 
     public int $uniqueFor = 600;
 
-    public function __construct(public int $reminderId)
-    {
-    }
+    public function __construct(public int $reminderId) {}
 
     public function uniqueId(): string
     {
