@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ManageAppointmentController;
+use App\Http\Middleware\ProtectManagementPage;
 use Illuminate\Support\Facades\Route;
 
 // --- Área pública do cliente -------------------------------------------------
@@ -16,7 +17,7 @@ Route::get('/agendar/{service}', [BookingController::class, 'create'])->name('bo
 Route::post('/agendar/{service}', [BookingController::class, 'store'])->middleware('throttle:booking')->name('booking.store');
 
 // Gerenciamento por token longo e aleatório (nunca por ID sequencial).
-Route::prefix('agendamento/{token}')->middleware('throttle:manage')->group(function () {
+Route::prefix('agendamento/{token}')->middleware(['throttle:manage', ProtectManagementPage::class])->group(function () {
     Route::get('/', [ManageAppointmentController::class, 'show'])->name('appointments.manage');
     Route::post('/cancelar', [ManageAppointmentController::class, 'cancel'])->name('appointments.cancel');
     Route::get('/remarcar', [ManageAppointmentController::class, 'rescheduleForm'])->name('appointments.reschedule');

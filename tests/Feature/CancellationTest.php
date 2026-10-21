@@ -146,6 +146,17 @@ class CancellationTest extends TestCase
         $this->assertFalse(AppointmentStatus::Completed->canTransitionTo(AppointmentStatus::Confirmed));
     }
 
+    public function test_pagina_de_gerenciamento_nao_vaza_token_por_referer_nem_cache(): void
+    {
+        $a = $this->book($this->service(), '2026-11-03', '10:00');
+
+        $this->get(route('appointments.manage', $a->manage_token))
+            ->assertOk()
+            ->assertHeader('Referrer-Policy', 'no-referrer')
+            ->assertHeader('X-Robots-Tag', 'noindex, nofollow')
+            ->assertHeaderContains('Cache-Control', 'no-store');
+    }
+
     public function test_rotas_publicas_sao_limitadas_por_throttle(): void
     {
         $limited = false;

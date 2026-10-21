@@ -50,7 +50,7 @@ return new class extends Migration
             $table->foreignId('appointment_id')->constrained()->cascadeOnDelete();
             $table->string('type', 10); // 24h, 2h
             $table->dateTime('remind_at');
-            // pending, processing, sent, failed, cancelled
+            // pending, sent, failed, cancelled
             $table->string('status', 20)->default('pending');
             $table->unsignedTinyInteger('attempts')->default(0);
             $table->dateTime('sent_at')->nullable();
